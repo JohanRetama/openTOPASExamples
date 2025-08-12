@@ -19,5 +19,6 @@ plt.ylabel("Frecuencua [a.u.]")
 plt.title('Comparativa Centelleo vs Cherenkov')
 plt.yscale('log')
 plt.legend()
-plt.show()
+plt.savefig("Centelleo vs Cherenkov.png", dpi=300)
+#plt.show()
 
