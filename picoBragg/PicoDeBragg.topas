@@ -1,0 +1,84 @@
+# Ultima fecha de modificación: 12/08/25
+# Este ejemplo sirve para ver el binado de geometrías y el Pico de Bragg
+
+#################################
+############ TOPAS ##############
+#################################
+
+Ts/NumberOfThreads              = -1
+b:Ts/ShowCPUTime                = "1"
+i:Ts/Seed                       = 1234
+i:Ts/ShowHistoryCountAtInterval = 10000
+b:Ge/CheckForOverlaps           = "True"
+b:Ts/PauseBeforeQuit  = "True"
+
+##################################
+########### FISICAS ##############
+##################################
+
+sv:Ph/Default/Modules					 = 1 "g4em-livermore"
+d:Ph/Default/EMRangeMin 				 = 100. eV
+d:Ph/Default/EMRangeMax 				 = 500. MeV
+d:Ph/Default/SetProductionCutLowerEdge   = 200 eV
+d:Ph/Default/SetProductionCutHighEdge    = 30 MeV
+d:Ph/Default/CutForAllParticles 		 = 0.05 mm
+
+##################################
+############# WORLD ##############
+##################################
+
+d:Ge/World/HLX        = 10 cm
+d:Ge/World/HLY        = 10 cm
+d:Ge/World/HLZ        = 10 cm
+s:Ge/World/Material   = "G4_WATER"
+
+##################################
+######## VOLUMEN SENSIBLE ########
+##################################
+
+s:Ge/CuboDeAgua/Type       = "TsBox"
+s:Ge/CuboDeAgua/Material   = "G4_WATER"
+s:Ge/CuboDeAgua/Parent     = "World"
+d:Ge/CuboDeAgua/HLX        =  5 cm
+d:Ge/CuboDeAgua/HLY        =  5 cm
+d:Ge/CuboDeAgua/HLZ        = 10 cm
+i:Ge/CuboDeAgua/ZBins      = 40
+d:Ge/CuboDeAgua/RotX       = 180 deg
+
+#######################################
+############# Detector ################
+#######################################
+
+s:Sc/Dosis/Quantity                   = "DoseToMedium"
+s:Sc/Dosis/Component                  = "CuboDeAgua"
+s:Sc/Dosis/IfOutputFileAlreadyExists  = "Overwrite"
+sv:Sc/Dosis/Report                    = 2 "Mean" "Standard_Deviation"
+s:Sc/Dosis/OutputFile                 = "Dosis"
+
+##################################
+############ SOURCE ##############
+##################################
+
+s:So/Demo/BeamParticle             = "proton"
+d:So/Demo/BeamEnergy               = 150 MeV
+u:So/Demo/BeamEnergySpread         = 0
+s:So/Demo/BeamPositionDistribution = "None"
+s:So/Demo/BeamAngularDistribution  = "None"
+i:So/Demo/NumberOfHistoriesInRun   = 10 * Ts/ShowHistoryCountAtInterval
+
+
+
+#######################################
+######### Visualización ###############
+#######################################
+
+
+#s:Gr/View/Type = "OpenGl"
+#i:Gr/View/WindowSizeX = 1920
+#i:Gr/View/WindowSizeY = 1080
+#d:Gr/View/Theta       = 90 deg
+#d:Gr/View/Phi         = 0 rad
+#u:Gr/View/Zoom        = 1
+
+#b:Ts/UseQt = "True"
+

@@ -1,0 +1,162 @@
+#############################################
+###############  TOPAS  #####################
+#############################################
+
+b:Ts/PauseBeforeQuit   = "True"
+b:Ts/ShowCPUTime       = "True"
+Ts/NumberOfThreads     = -1
+
+i:Ts/ShowHistoryCountAtInterval = 10000 
+
+includeFile = bgoCrystal.topas
+
+#############################################
+################ Physics ####################
+#############################################
+
+s:Ph/ListName         = "Optical"
+s:Ph/Optical/Type     = "Geant4_Modular"
+sv:Ph/Optical/Modules = 2 "g4em-standard_opt3" "g4optical"
+
+
+#############################################
+############### WORLD #######################
+#############################################
+
+d:Ge/World/HLX        = 6.85 mm
+d:Ge/World/HLY        = 13.0 mm
+d:Ge/World/HLZ        = 28.0 mm
+s:Ge/World/Material   = "Vacuum"
+
+
+#############################################
+################ Contenedor #################
+#############################################
+
+s:Ge/Contenedor/Type       = "TsBox"
+s:Ge/Contenedor/Material   = "Mylar"
+s:Ge/Contenedor/Parent     = "World"
+d:Ge/Contenedor/HLX        = 6.85 mm
+d:Ge/Contenedor/HLY        = 13.0 mm
+d:Ge/Contenedor/HLZ        = 25.5 mm
+d:Ge/Contenedor/TransX     = 0. m
+d:Ge/Contenedor/TransY     = 0. m
+d:Ge/Contenedor/TransZ     = -2.5 mm
+d:Ge/Contenedor/RotX       = 0. deg
+d:Ge/Contenedor/RotY       = 0. deg
+d:Ge/Contenedor/RotZ       = 0. deg
+s:Ge/Contenedor/Color      = "Blue"
+
+
+
+#############################################
+################# CENTELLADOR ###############
+#############################################
+
+s:Ge/Plastic/Type       = "TsBox"
+s:Ge/Plastic/Material   = "BGO"
+s:Ge/Plastic/Parent     = "Contenedor"
+d:Ge/Plastic/HLX        = 6.35 mm
+d:Ge/Plastic/HLY        = 12.5 mm
+d:Ge/Plastic/HLZ        = 25.0 mm
+d:Ge/Plastic/TransX     = 0. m
+d:Ge/Plastic/TransY     = 0. m
+d:Ge/Plastic/TransZ     = 0.5 mm
+d:Ge/Plastic/RotX       = 0. deg
+d:Ge/Plastic/RotY       = 0. deg
+d:Ge/Plastic/RotZ       = 0. deg
+s:Ge/Plastic/OpticalBehaviorTo/Contenedor = "Reflective_Surface"
+
+
+#############################################
+############### Espacio Fase ################
+#############################################
+
+s:Ge/Espacio_Fase/Type       = "TsBox"
+s:Ge/Espacio_Fase/Material   = "BGO"
+s:Ge/Espacio_Fase/Parent     = "Contenedor"
+d:Ge/Espacio_Fase/HLX        = 3.0 mm
+d:Ge/Espacio_Fase/HLY        = 3.0 mm
+d:Ge/Espacio_Fase/HLZ        = 0.5 mm
+d:Ge/Espacio_Fase/TransX     = 0. m
+d:Ge/Espacio_Fase/TransY     = 0. m
+d:Ge/Espacio_Fase/TransZ     = -25.0 mm
+d:Ge/Espacio_Fase/RotX       = 0. deg
+d:Ge/Espacio_Fase/RotY       = 0. deg
+d:Ge/Espacio_Fase/RotZ       = 0. deg
+s:Ge/Espacio_Fase/Color      = "Red"
+
+
+####################################################################################
+####################################################################################
+###################### Superficie detectora de fotones opticos #####################
+####################################################################################
+####################################################################################
+
+s:Ge/FOT/Type     = "TsBox"
+s:Ge/FOT/Material = "BGO"
+s:Ge/FOT/Parent   = "Espacio_Fase"
+d:Ge/FOT/HLX      = 2.99 mm
+d:Ge/FOT/HLY      = 2.99 mm
+d:Ge/FOT/HLZ      = 0.49 mm
+d:Ge/FOT/TransX   = 0. m
+d:Ge/FOT/TransY   = 0. m
+d:Ge/FOT/TransZ   = 0. mm
+d:Ge/FOT/RotX     = 0. deg
+d:Ge/FOT/RotY     = 0. deg
+d:Ge/FOT/RotZ     = 0. deg
+s:Ge/FOT/Color    = "Green"
+s:Ge/FOT/OpticalBehavior = "SurfaceDetector"
+
+
+##################################
+############ SOURCE ##############
+##################################
+
+s:Ge/BeamPosition/Type   = "Group"
+d:Ge/BeamPosition/TransX = 0. m
+d:Ge/BeamPosition/TransY = 0 mm
+d:Ge/BeamPosition/TransZ = 28.0 mm
+d:Ge/BeamPosition/RotX   = 180. deg
+d:Ge/BeamPosition/RotY   = 0. deg
+d:Ge/BeamPosition/RotZ   = 0. deg
+
+
+s:So/Demo/Type 					    = "Beam" 
+s:So/Demo/Component 			    = "BeamPosition"
+s:So/Demo/BeamParticle 			    = "gamma"
+d:So/Demo/BeamEnergy 			    = 511 keV
+u:So/Demo/BeamEnergySpread 		    = 0.
+s:So/Demo/BeamPositionDistribution  = "None" 
+d:So/Demo/BeamPositionCutoffX 	    = 0. mm 
+d:So/Demo/BeamPositionCutoffY 	    = 0. mm
+i:So/Demo/NumberOfHistoriesInRun    = 10 * Ts/ShowHistoryCountAtInterval
+
+
+#######################################
+############# Detector ################
+#######################################
+
+s:Sc/Scorer/Quantity = "OpticalPhotonCount"
+s:Sc/Scorer/Component = "Espacio_Fase"
+s:Sc/Scorer/OutputFile = "OpticalPhotonCount"
+s:Sc/Scorer/OutputType = "ASCII"
+s:Sc/Scorer/IfOutputFileAlreadyExists = "Overwrite"
+
+
+############################################
+#################### View ###################
+#############################################
+
+#s:Gr/ViewA/Type             = "OpenGL"
+#i:Gr/ViewA/WindowSizeX      = 1024
+#i:Gr/ViewA/WindowSizeY      = 768
+#b:Gr/ViewA/IncludeAxes      = "True"
+#d:Gr/ViewA/AxesSize			= 12.5 mm
+#d:Gr/ViewA/Theta            = 45 deg
+#d:Gr/ViewA/Phi              = 90 deg
+#s:Gr/ViewA/Projection       = "Perspective"
+#d:Gr/ViewA/PerspectiveAngle = 30 deg
+#u:Gr/ViewA/Zoom             = 0.9
+
+#Ts/UseQt = "True"

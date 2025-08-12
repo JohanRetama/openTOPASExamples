@@ -1,0 +1,128 @@
+# Ultima fecha de modificación: 12/08/25
+# Este ejemplo sirve para ver la diferencia en contraste de rayos X de 120 keV incidiendo
+# en laminas de plomo
+
+#################################
+############ TOPAS ##############
+#################################
+
+b:Ts/PauseBeforeQuit   = "True"
+b:Ts/ShowCPUTime 	   = "True"
+Ts/NumberOfThreads     = -1
+
+
+##################################
+######## WORLD ###################
+##################################
+
+s:Ge/World/Type       = "TsBox"
+s:Ge/World/Material   = "Vacuum"
+d:Ge/World/HLX        = 10. cm # Half Length
+d:Ge/World/HLY        = 10. cm
+d:Ge/World/HLZ        = 10. cm
+d:Ge/World/TransX     = 0. m
+d:Ge/World/TransY     = 0. m
+d:Ge/World/TransZ     = 0. m
+d:Ge/World/RotX       = 0. deg
+d:Ge/World/RotY       = 0. deg
+d:Ge/World/RotZ       = 0. deg
+
+s:Ge/Cylinder/Type       = "TsCylinder"
+s:Ge/Cylinder/Parent     = "World"
+s:Ge/Cylinder/Material   = "Vacuum"
+d:Ge/Cylinder/RMin       = 0 cm
+d:Ge/Cylinder/RMax       = 4 cm
+d:Ge/Cylinder/HL 	     = 0.5 cm
+d:Ge/Cylinder/TransX     = 0. m
+d:Ge/Cylinder/TransY     = 0. m
+d:Ge/Cylinder/TransZ     = 0. m
+d:Ge/Cylinder/RotX       = 0. deg
+d:Ge/Cylinder/RotY       = 0. deg
+d:Ge/Cylinder/RotZ       = 0. deg
+
+##################################
+########### PHANTOMS #############
+##################################
+
+s:Ge/Cylinder_1mm/Type       = "TsCylinder"
+s:Ge/Cylinder_1mm/Parent     = "Cylinder"
+s:Ge/Cylinder_1mm/Material   = "Lead"
+d:Ge/Cylinder_1mm/RMin       = 0 cm
+d:Ge/Cylinder_1mm/RMax       = 1.7 cm
+d:Ge/Cylinder_1mm/HL 	     = 0.5 mm
+d:Ge/Cylinder_1mm/TransX     = -0.02 m
+d:Ge/Cylinder_1mm/TransY     = 0. m
+d:Ge/Cylinder_1mm/TransZ     = 0. m
+d:Ge/Cylinder_1mm/RotX       = 0. deg
+d:Ge/Cylinder_1mm/RotY       = 0. deg
+d:Ge/Cylinder_1mm/RotZ       = 0. deg
+
+s:Ge/Cylinder_8mm/Type       = "TsCylinder"
+s:Ge/Cylinder_8mm/Parent     = "Cylinder"
+s:Ge/Cylinder_8mm/Material   = "Lead"
+d:Ge/Cylinder_8mm/RMin       = 0 cm
+d:Ge/Cylinder_8mm/RMax       = 1.7 cm
+d:Ge/Cylinder_8mm/HL 	     = 4. mm
+d:Ge/Cylinder_8mm/TransX     = 0.02 m
+d:Ge/Cylinder_8mm/TransY     = 0 m
+d:Ge/Cylinder_8mm/TransZ     = 0. m
+d:Ge/Cylinder_8mm/RotX       = 0. deg
+d:Ge/Cylinder_8mm/RotY       = 0. deg
+d:Ge/Cylinder_8mm/RotZ       = 0. deg
+
+
+##################################
+############ SOURCE ##############
+##################################
+
+s:Ge/BeamPosition/Parent   = "World"
+s:Ge/BeamPosition/Type     = "Group"
+d:Ge/BeamPosition/TransX   = 0. m
+d:Ge/BeamPosition/TransY   = 0. m
+d:Ge/BeamPosition/TransZ   =  Ge/World/HLZ m
+d:Ge/BeamPosition/RotX     = 180. deg
+d:Ge/BeamPosition/RotY     = 0. deg
+d:Ge/BeamPosition/RotZ     = 0. deg
+
+
+s:So/Demo/Type 						 = "Beam"
+s:So/Demo/Component 				 = "BeamPosition"
+s:So/Demo/BeamParticle 				 = "gamma"
+d:So/Demo/BeamEnergy 				 = 150 keV
+u:So/Demo/BeamEnergySpread 			 = 0
+s:So/Demo/BeamPositionCutoffShape    = "Rectangle"
+d:So/Demo/BeamPositionCutoffX 		 = 5 cm
+d:So/Demo/BeamPositionCutoffY 		 = 5 cm
+s:So/Demo/BeamPositionDistribution   = "Flat"
+i:So/Demo/NumberOfHistoriesInRun     = 10 * Ts/ShowHistoryCountAtInterval
+i:Ts/ShowHistoryCountAtInterval   	 = 10000000
+
+
+#######################################
+########### Detector ##################
+#######################################
+
+s:Sc/PhaseSpace_Cylinder/Quantity					   = "PhaseSpace" 
+s:Sc/PhaseSpace_Cylinder/Surface 					   = "Cylinder/ZMinusSurface" 
+sv:Sc/PhaseSpace_Cylinder/OnlyIncludeParticlesNamed    = 1 "gamma"
+s:Sc/PhaseSpace_Cylinder/OutputType 				   = "ASCII" 
+s:Sc/PhaseSpace_Cylinder/OutputFile 			       = "PhaseSpace" 
+s:Sc/PhaseSpace_Cylinder/IfOutputFileAlreadyExists     = "Overwrite" 
+
+
+#######################################
+######### Visualización ###############
+#######################################
+
+#s:Gr/View/Type = "OpenGl"
+#i:Gr/View/WindowSizeX = 1920
+#i:Gr/View/WindowSizeY = 1080
+#d:Gr/View/Theta       = 90 deg
+#d:Gr/View/Phi         = 0 rad
+#u:Gr/View/Zoom        = 1
+
+#b:Ts/UseQt = "True"
+
+
+
+
