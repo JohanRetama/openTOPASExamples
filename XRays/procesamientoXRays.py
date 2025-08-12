@@ -24,6 +24,7 @@ plt.colorbar(label="log₁₀(Energía acumulada + 1)")
 plt.xlabel("X [cm]")
 plt.ylabel("Y [cm]")
 plt.title("Mapa de impactos ponderado por energía")
-plt.show()
-plt.show()
+plt.savefig("XRays.png")
+#plt.show()
+
 
