@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import subprocess
 
 archivo = 'Dosis.csv'
 data = pd.read_csv(archivo, sep=",", skiprows=8, usecols=[2,3,4], header=None)
@@ -19,5 +19,8 @@ plt.ylabel("Dosis Porcentual")
 plt.title("PDD Protones")
 plt.legend()
 plt.grid()
-plt.savefig("Pico de Bragg.png", dpi=300)
+
+imagen = "pico_de_Bragg.png"
+plt.savefig(imagen, dpi=300)
+subprocess.run(["display", imagen])
 #plt.show()
