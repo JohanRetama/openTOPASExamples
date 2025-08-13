@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import subprocess
 
 
 archivo = 'PhaseSpace.phsp'
@@ -24,7 +25,10 @@ plt.colorbar(label="log₁₀(Energía acumulada + 1)")
 plt.xlabel("X [cm]")
 plt.ylabel("Y [cm]")
 plt.title("Mapa de impactos ponderado por energía")
-plt.savefig("XRays.png", dpi=300)
+
+imagen = "xRays.png"
+plt.savefig(imagen, dpi=100)
+subprocess.run(["display", imagen])
 #plt.show()
 
 
