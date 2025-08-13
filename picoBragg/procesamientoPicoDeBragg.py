@@ -21,6 +21,6 @@ plt.legend()
 plt.grid()
 
 imagen = "pico_de_Bragg.png"
-plt.savefig(imagen, dpi=300)
+plt.savefig(imagen, dpi=100)
 subprocess.run(["display", imagen])
 #plt.show()
